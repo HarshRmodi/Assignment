@@ -1,0 +1,14 @@
+{
+  "employees": [
+    {
+      "fullName": "harsh modi",
+      "email": "gmail@h.com",
+      "gender": "female",
+      "interest": [
+        "Angular",
+        "Vue"
+      ],
+      "id": 1
+    }
+  ]
+}

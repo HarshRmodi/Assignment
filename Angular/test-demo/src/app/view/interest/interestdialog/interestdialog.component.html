@@ -1,0 +1,83 @@
+<div class="container interest-dialog">
+    <form #myForm="ngForm" name="form" (ngSubmit)="submitForm($event)">
+
+        <h2 mat-dialog-title>Interest Form</h2>
+        <div mat-dialog-content class="mat-typography">
+
+            <!-- #region Interest Form content -->
+            <mat-form-field>
+                <input matInput placeholder="Enter Fullname" #fullName="ngModel" [(ngModel)]="interest.fullName"
+                    name="fullName" pattern="^[A-Za-z]+\s[A-Za-z]+$" required>
+            </mat-form-field>
+            <div *ngIf="myForm.submitted || ( fullName?.invalid && (fullName.dirty || fullName.touched))"
+                class="invalid-feedback">
+                <div *ngIf="fullName?.errors?.['pattern']">First Name must be single space and character only</div>
+                <div *ngIf="fullName?.errors?.['required']">First Name is required</div>
+            </div>
+
+            <mat-form-field class="mt-20">
+                <input matInput placeholder="Enter Email" #email="ngModel" [(ngModel)]="interest.email" name="email"
+                    required email>
+            </mat-form-field>
+            <div *ngIf="myForm.submitted || (email?.invalid && (email.dirty || email.touched))"
+                class="invalid-feedback">
+                <div *ngIf="email?.errors?.['email']">Email must be valid</div>
+                <div *ngIf="email?.errors?.['required']">Email is required</div>
+            </div>
+
+            <div class="mt-20" [ngClass]="{'mat-form-field-invalid':myForm.submitted && !interest.gender}">
+                <mat-radio-group [(ngModel)]="interest.gender" name="gender" required>
+                    <mat-radio-button value="male">Male</mat-radio-button>
+                    <mat-radio-button class="ml-5" value="female">Female</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="myForm.submitted && !interest.gender" class="invalid-feedback mt-15">
+                <div>Gender is required</div>
+            </div>
+
+            <mat-form-field class="mt-20">
+                <mat-select (openedChange)="openedChange($event)" placeholder="Select Interest..."
+                    [formControl]="selectFormControl" multiple required>
+                    <mat-select-trigger>
+                        {{selectFormControl.value ? selectFormControl.value[0] : ''}}
+                        <span *ngIf="selectFormControl.value?.length > 1" class="additional-selection">
+                            (+{{selectFormControl.value.length - 1}} {{selectFormControl.value?.length === 2 ? 'other' :
+                            'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <div class="select-container">
+                        <mat-optgroup>
+                            <mat-form-field style="width:100%;">
+                                <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                                    [formControl]="searchTextboxControl">
+                                <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="clearSearch($event)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </mat-optgroup>
+                        <mat-optgroup *ngIf="(filteredOptions | async)?.length == 0">
+                            <div>No results found!</div>
+                        </mat-optgroup>
+                        <mat-option (onSelectionChange)="selectionChange($event)"
+                            *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </div>
+                </mat-select>
+            </mat-form-field>
+            <div *ngIf="myForm.submitted && selectFormControl.value.length==0" class="alert">
+                <div class="invalid-feedback mt-15">
+                    Interest is required
+                </div>
+            </div>
+
+            <div *ngIf="selectFormControl.value.length>0">{{ 'You have choosen ' + selectFormControl.value }}</div>
+            <!-- #endregion -->
+        </div>
+        <div mat-dialog-actions align="end">
+            <button type="button" mat-button (click)="onCancelClick()">Cancel</button>
+            <button type="submit" mat-flat-button color="primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,23 @@
+.interest-list .mat-card{
+    color:white;
+    background-color: #303F9F;
+    border-radius: 0px;
+    text-align:center;
+    font-size: 20px;
+}
+
+.interest-list .button-wrapper{
+    float: right;
+    margin: 33px;
+}
+
+.interest-list .filter-searchbox{
+    margin: 25px;
+}
+
+.interest-list .no-record-found{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 20px;
+}

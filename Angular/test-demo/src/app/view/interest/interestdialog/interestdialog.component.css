@@ -1,0 +1,28 @@
+::ng-deep .mat-form-field-invalid .mat-radio-label-content{
+    color:#f44336;
+}
+::ng-deep  .mat-form-field-invalid .mat-radio-outer-circle{
+    border-color:#f44336!important;
+}
+
+.interest-dialog .additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+
+.interest-dialog .select-container{
+  margin-top:10px;
+}
+
+.interest-dialog .mt-20{
+  margin-top: 20px;
+}
+
+.interest-dialog .mt-15{
+  margin-top: 15px;
+}
+
+.interest-dialog .ml-5{
+  margin-left: 5px;
+}
+  

@@ -1,0 +1,74 @@
+<div class="container interest-list">
+  <mat-toolbar color="primary">
+    <span>Interest List</span>
+  </mat-toolbar>
+
+  <div class="mat-elevation-z8">
+    <!-- #region Add button -->
+    <div class="button-wrapper">
+      <button mat-raised-button color="primary" (click)="openInterestDialog()">
+        <mat-icon>add</mat-icon> Add Record
+      </button>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region Search Here -->
+    <mat-form-field class="filter-searchbox">
+      <input matInput (keyup)="processChange($event)" placeholder="Search here...">
+    </mat-form-field>
+    <!-- #endregion -->
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+    <!-- #region Interest Data List -->
+    <mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
+      matSortDirection="desc">
+
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Full Name </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.fullName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.gender}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="interest">
+        <mat-header-cell *matHeaderCellDef> Interest </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.interest}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            (click)="editClick(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+            (click)="deleteClick(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <div class="no-record-found" *ngIf="dataSource.data.length === 0">No records found</div>
+
+    <!-- #endregion -->
+
+    <!-- #region Pagination -->
+    <mat-paginator #paginator [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      (page)="pageChanged($event)">
+    </mat-paginator>
+    <!-- #endregion -->
+  </div>
+</div>
